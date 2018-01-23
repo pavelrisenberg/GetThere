@@ -1,0 +1,7 @@
+<svg>
+  <textarea id="status"></textarea>
+  <rect id="destinationsList" height="100%" width="100%">
+    <text id="timeValue" x="10" y="195"></text>
+    <text id="timeLabel" x="10" y="240"></text>
+  </rect>
+</svg>

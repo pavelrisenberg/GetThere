@@ -1,0 +1,19 @@
+{
+  "fitbit": {
+    "appUUID": "3a9b1f39-18b6-466a-a3ba-78e3874f3243",
+    "appType": "app",
+    "appDisplayName": "Get There",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#607d8b",
+    "requestedPermissions": [
+      "access_location",
+      "access_internet",
+      "run_background"
+    ],
+    "i18n": {
+      "en": {
+        "name": "Get There"
+      }
+    }
+  }
+}

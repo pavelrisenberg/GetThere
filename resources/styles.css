@@ -1,0 +1,43 @@
+text {
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  y: 12;
+  text-length: 32;
+}
+
+textarea {
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  y: 12;
+  text-length: 1024;
+}
+
+#timeValue {
+  font-family: System-Regular;
+  font-size: 72;
+  fill: white;
+  text-anchor: start;
+  text-length: 32;
+}
+
+#timeLabel {
+  font-family: System-Regular;
+  font-size: 32;
+  fill: white;
+  text-anchor: start;
+  text-length: 32;
+}
+
+#status {
+  text-anchor: middle;
+  display-align: center;
+  x: 5%;
+  y: 5%;
+  width: 90%;
+  height: 90%;
+  text-length:512;
+  font-size: 32;
+  fill: white;
+}
