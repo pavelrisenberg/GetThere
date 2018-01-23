@@ -7,7 +7,7 @@ export function GoogleMapsAPI(apiKey) {
   }
 };
 
-GoogleMapsAPI.prototype.getRouteTiming = function(origin, destination) {
+GoogleMapsAPI.prototype.getRouteTiming = function(origin, destination, resultArray) {
   var self = this;
   return new Promise(function(resolve, reject) {
     var url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
@@ -15,18 +15,24 @@ GoogleMapsAPI.prototype.getRouteTiming = function(origin, destination) {
     url += "&mode=driving&units=metric";
     url += "&origins=" + origin;
     url += "&destinations=" + destination;
+    console.log("Fetching URL: " + url);
     fetch(url).then(function(response) {
-      console.log("Got response from server:", response);
       return response.json();
     }).then(function(json) {
-      //console.log("Got JSON response from server:" + JSON.stringify(json));
+      console.log("Got JSON response from server:" + JSON.stringify(json));
 
-      var time = (Number.parseInt(json["rows"][0]["elements"][0]["duration"]["value"]) / 60);
+      for (let i = 0; i < json["rows"][0]["elements"].length; i++) {
+        var time = (Number.parseInt(json["rows"][0]["elements"][i]["duration"]["value"]) / 60);
+        var distance = (Number.parseInt(json["rows"][0]["elements"][i]["distance"]["value"]));
+        
+        resultArray[i].time = time;
+        resultArray[i].distance = distance;
+      }
 
-      resolve(time);
+      resolve(resultArray);
     }).catch(function (error) {
       console.log("Fetching " + url + " failed: " + JSON.stringify(error));
-      reject(error);
+      reject(resultArray);
     });
   });
 }
