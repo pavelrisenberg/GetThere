@@ -1,7 +1,31 @@
 <svg>
+  <!-- Define a reusable tile to display a train -->
+  <symbol id="tile-destination" focusable="false" pointer-events="visible"
+  system-events="all">
+    <rect id="destination-background" height="102" />
+
+    <text id="destination-name" font-size="50" x="5" y="55" fill="white"></text>
+
+    <text id="duration" x="5" y="100" font-size="42" fill="white"></text>
+
+    <rect id="tile-divider-bottom" height="2" />
+  </symbol>
+
   <textarea id="status"></textarea>
-  <rect id="destinationsList" height="100%" width="100%">
-    <text id="timeValue" x="10" y="195"></text>
-    <text id="timeLabel" x="10" y="240"></text>
-  </rect>
+
+  <use id="destinationsList" href="#tile-list" height="100%" width="100%">
+    <var id="reorder-enabled" value="0"/>
+    <var id="separator-height-bottom" value="2"/>
+
+    <use id="destination-0" href="#tile-list-item" class="item">
+      <use href="#tile-destination" />
+    </use>
+    <use id="destination-1" href="#tile-list-item" class="item">
+      <use href="#tile-destination" />
+    </use>
+    <use id="destination-2" href="#tile-list-item" class="item">
+      <use href="#tile-destination" />
+    </use>
+
+  </use>
 </svg>

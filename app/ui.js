@@ -1,10 +1,18 @@
+import { DESTINATIONS_COUNT } from "../common/globals.js";
+
 let document = require("document");
 
 export function GetThereUI() {
-  this.timeValue = document.getElementById("timeValue");
-  this.timeLabel = document.getElementById("timeLabel");
   this.destinationsList = document.getElementById("destinationsList");
   this.statusText = document.getElementById("status");
+  
+  this.tiles = [];
+  for (var i = 0; i < DESTINATIONS_COUNT; i++) {
+    var tile = document.getElementById(`destination-${i}`);
+    if (tile) {
+      this.tiles.push(tile);
+    }
+  }  
 }
 
 
@@ -32,13 +40,34 @@ GetThereUI.prototype.updateUI = function(state, destinations) {
 
 GetThereUI.prototype.updateDestinationsList = function(destinations) {
   
-  if(destinations.status) {
-    this.timeValue.text = destinations.time.toFixed(0);
-    this.timeLabel.text = "mins";
-  } else {
-    this.timeValue.text = "--";
-    this.timeLabel.text = "";    
-  }
+  for (let i = 0; i < destinations.destinationData.length; i++) {
+    
+    var tile = this.tiles[i];
+    if (!tile) {
+      console.log("no tile for index " + i);
+      continue;
+    }
 
+    if (i >= destinations.destinationData.length) {
+      tile.style.display = "none";
+      continue;
+    }
+    
+    tile.style.display = "inline";
+    
+    tile.getElementById("destination-name").text = destinations.destinationData[i].destination_name;
+    if(destinations.status) {
+      // Rendering happy scenario
+      let time = destinations.destinationData[i].time.toFixed(0);
+      // Detecting if I'm around with some gaps
+      if (time > 0) {
+        tile.getElementById("duration").text = destinations.destinationData[i].time.toFixed(0);        
+      }
+    } else {
+      tile.getElementById("duration").text = "--";
+    }
+    
+  }
+  
 }
 

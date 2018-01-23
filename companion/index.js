@@ -4,7 +4,8 @@ import { geolocation } from "geolocation";
 import { me } from "companion";
 
 import { GoogleMapsAPI } from "./gmaps.js";
-import { LATITUDE_SETTING, LONGITUDE_SETTING, MOSCOW_LATITUDE, MOSCOW_LONGITUDE } from "../common/globals.js";
+import { DESTINATIONS_COUNT, 
+        MOSCOW_NAME, MOSCOW_LATITUDE, MOSCOW_LONGITUDE } from "../common/globals.js";
 
 console.log("Get There companion started");
 
@@ -15,8 +16,10 @@ settingsStorage.onchange = function(evt) {
 
 // Connected?
 setInterval(function() {
-  console.log("Get There App (" + me.buildId + "): companion connection=" + messaging.peerSocket.readyState + 
-              " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
+  if (messaging.peerSocket.readyState != messaging.peerSocket.OPEN) {
+    console.log("Get There App (" + me.buildId + "): companion connection=" + messaging.peerSocket.readyState + 
+                " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
+  }
 }, 3000);
 
 // Listen for the onopen event
@@ -44,60 +47,85 @@ function sendSchedule() {
 }
 
 function positionSuccess(position) {
-  let latitude = settingsStorage.getItem(LATITUDE_SETTING);
-  let longitude = settingsStorage.getItem(LONGITUDE_SETTING);
 
-  if (latitude && longitude) {
-    try {
-      latitude = JSON.parse(latitude);
-      longitude = JSON.parse(longitude);
+  let destinationsSettings = [];
+  
+  for (let i = 1; i <= DESTINATIONS_COUNT; i++){
+    let destination_name = settingsStorage.getItem("destination_name" + i);
+    let address = settingsStorage.getItem("address" + i);
+                                       
+    if (destination_name && address) {
+      try {
+        destination_name = JSON.parse(destination_name);
+        address = JSON.parse(address);
       
-      if (!latitude ||
-          typeof(latitude) !== "object" ||
-          !longitude ||
-          typeof(longitude) !== "object"
-         ) {
-        latitude = MOSCOW_LATITUDE;
-        longitude = MOSCOW_LONGITUDE;
-        console.log("No settings found - using default values");
-      } else {
-        latitude = latitude.name;
-        longitude = longitude.name;
+        if (!address ||
+            typeof(address) !== "object" ||
+            !destination_name ||
+            typeof(destination_name) !== "object"
+           ) {
+          console.log("No settings found");
+        } else {
+          destination_name = destination_name.name;
+          address = address.name;
+          
+          destinationsSettings.push({
+            "destination_name": destination_name,
+            "address": address,
+          });
+        }
+      } catch (e) {
+        console.log("Error parsing setting values: " + e);
       }
-    }
-    catch (e) {
-      console.log("Error parsing setting values: " + e);
     }
   }
 
+  if(!destinationsSettings.length) {
+    console.log("No settings found overall - passing default settings");
+    destinationsSettings.push({
+      "destination_name": MOSCOW_NAME,
+      "address": MOSCOW_LATITUDE + "," + MOSCOW_LONGITUDE
+     });
+  }
+
+  let destinations = "";
+  for (let i = 0; i < destinationsSettings.length; i++) {
+    if(i) {
+      destinations += "|";
+    }
+    destinations += destinationsSettings[i].address;
+  }
   
   var googleMapsApi = new GoogleMapsAPI();
   googleMapsApi.getRouteTiming(
       position.coords.latitude + "," + position.coords.longitude, 
-      latitude + "," + longitude)
-      .then(function(time) {
-    if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-      console.log("Sending time: " + JSON.stringify(time));
-      messaging.peerSocket.send({
-        "time": time, 
-        "status": 1
-      });
+      destinations, 
+      destinationsSettings
+      )
+      .then(function(destinationData) {
+        if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+          console.log("Sending data to clock: " + JSON.stringify(destinationData));
+          messaging.peerSocket.send({
+            "destinationData": destinationData, 
+            "status": 1
+          });
     
-    }
+        }
   }).catch(function (e) {
     console.log("error"); console.log(e);
     messaging.peerSocket.send({
-      "time": undefined, 
+      "destinationData": destinationData, 
       "status": 0
     });
   });
 
 }
 
+
 function positionError(position) {
   console.log("Position error"); 
     messaging.peerSocket.send({
-      "time": undefined, 
+      "destinationData": destinationData, 
       "status": 0
     });
 }
