@@ -1,25 +1,55 @@
+#destinationsScreen {
+  display: none;
+}
+
+.item {
+  x: 0;
+  y: 0;
+  width: 100%;
+  height: 179;
+}
+
 text {
   font-size: 32;
-  font-family: System-Regular;
+  font-family: SevilleSharp-Regular;
   font-weight: regular;
   y: 12;
   text-length: 32;
+  fill: white;
 }
 
 textarea {
   font-size: 32;
-  font-family: System-Regular;
+  font-family: SevilleSharp-Regular;
   font-weight: regular;
   y: 12;
   text-length: 1024;
+  fill: white;
 }
 
-.item-header     { x: 0; y: 0; width: 100%; height: 25 }
-.item            { x: 0; y: 0; width: 100%; height: 117; }
-.item-footer     { x: 0; y: 0; width: 100%; height: 20; }
+#currentTimeText {
+  font-size: 30;
+  text-length: 10;
+}
 
-.tile-divider-bottom {
-  fill: grey;
+.destination-name {
+  font-size: 30;
+  text-length: 15;  
+}
+
+.duration {
+  font-size: 60;
+  text-length: 10;  
+}
+
+.distance {
+  font-size: 30;
+  text-length: 10;  
+}
+
+.arrival {
+  font-size: 30;
+  text-length: 20;  
 }
 
 #status {
