@@ -1,9 +1,11 @@
 import { DESTINATIONS_COUNT } from "../common/globals.js";
+import { getFormattedCurrentTime, getFormattedDuration, getTimeAtDestination } from "../common/utils.js";
 
 let document = require("document");
 
 export function GetThereUI() {
-  this.destinationsList = document.getElementById("destinationsList");
+  this.destinationsScreen = document.getElementById("destinationsScreen");
+  this.currentTimeText = document.getElementById("currentTimeText");
   this.statusText = document.getElementById("status");
   
   this.tiles = [];
@@ -19,12 +21,14 @@ export function GetThereUI() {
 GetThereUI.prototype.updateUI = function(state, destinations) {
 
   if (state === "loaded") {
-    this.destinationsList.style.display = "inline";
+    this.destinationsScreen.style.display = "inline";
+    this.statusText.style.display = "none";
     this.statusText.text = "";
 
     this.updateDestinationsList(destinations);
   } else {
-    this.destinationsList.style.display = "none";
+    this.destinationsScreen.style.display = "none";
+    this.statusText.style.display = "inline";
 
     if (state === "loading") {
       this.statusText.text = "Loading times to destinations ...";
@@ -39,6 +43,8 @@ GetThereUI.prototype.updateUI = function(state, destinations) {
 }
 
 GetThereUI.prototype.updateDestinationsList = function(destinations) {
+  
+  this.currentTimeText.text = getFormattedCurrentTime();
   
   for (let i = 0; i < destinations.destinationData.length; i++) {
     
@@ -58,13 +64,23 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
     tile.getElementById("destination-name").text = destinations.destinationData[i].destination_name;
     if(destinations.status) {
       // Rendering happy scenario
-      let time = destinations.destinationData[i].time.toFixed(0);
-      // Detecting if I'm around with some gaps
-      if (time > 0) {
-        tile.getElementById("duration").text = destinations.destinationData[i].time.toFixed(0);        
+      var duration = destinations.destinationData[i].duration;
+      var distance = destinations.destinationData[i].distance / 1000;
+      // Detecting if I'm around location in question with <=1km duration
+      if (distance > 1) {
+        tile.getElementById("duration").text = getFormattedDuration(duration);
+        tile.getElementById("distance").text = distance.toFixed(1);
+        tile.getElementById("distanceLabel").text = "km";
+        tile.getElementById("arrival").text =
+          `Arriving at ${getTimeAtDestination(duration)}`;
+      } else {
+        tile.style.display = "none";
       }
     } else {
       tile.getElementById("duration").text = "--";
+      tile.getElementById("distance").text = "";
+      tile.getElementById("distanceLabel").text = "";
+      tile.getElementById("arrival").text = "";
     }
     
   }

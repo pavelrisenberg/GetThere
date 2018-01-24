@@ -22,10 +22,10 @@ GoogleMapsAPI.prototype.getRouteTiming = function(origin, destination, resultArr
       console.log("Got JSON response from server:" + JSON.stringify(json));
 
       for (let i = 0; i < json["rows"][0]["elements"].length; i++) {
-        var time = (Number.parseInt(json["rows"][0]["elements"][i]["duration"]["value"]) / 60);
+        var duration = (Number.parseInt(json["rows"][0]["elements"][i]["duration"]["value"]) / 60);
         var distance = (Number.parseInt(json["rows"][0]["elements"][i]["distance"]["value"]));
         
-        resultArray[i].time = time;
+        resultArray[i].duration = duration;
         resultArray[i].distance = distance;
       }
 

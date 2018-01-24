@@ -1,6 +1,5 @@
 var document = require("document");
 import * as messaging from "messaging";
-import * as util from "../common/utils";
 import { me } from "appbit";
 import { GetThereUI } from "./ui.js";
 
@@ -12,7 +11,7 @@ setInterval(function() {
   if(!(messaging.peerSocket.readyState === messaging.peerSocket.OPEN)) {
     ui.updateUI("disconnected");
   }
-}, 1000);
+}, 3000);
 
 // Connected?
 setInterval(function() {
