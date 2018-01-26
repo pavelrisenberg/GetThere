@@ -111,11 +111,19 @@ function positionSuccess(position) {
           });
     
         }
+      }, function(destinationData) {
+        if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+          console.log("Sending data to clock: " + JSON.stringify(destinationData));
+          messaging.peerSocket.send({
+            "destinationData": destinationData, 
+            "status": 2
+          });
+        }
   }).catch(function (e) {
     console.log("error"); console.log(e);
     messaging.peerSocket.send({
       "destinationData": destinationData, 
-      "status": 0
+      "status": 2
     });
   });
 
@@ -126,6 +134,6 @@ function positionError(position) {
   console.log("Position error"); 
     messaging.peerSocket.send({
       "destinationData": destinationData, 
-      "status": 0
+      "status": 3
     });
 }
