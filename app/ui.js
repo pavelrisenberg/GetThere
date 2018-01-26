@@ -21,11 +21,23 @@ export function GetThereUI() {
 GetThereUI.prototype.updateUI = function(state, destinations) {
 
   if (state === "loaded") {
-    this.destinationsScreen.style.display = "inline";
-    this.statusText.style.display = "none";
-    this.statusText.text = "";
+    if(destinations.status == 1) {
+      this.destinationsScreen.style.display = "inline";
+      this.statusText.style.display = "none";
+      this.statusText.text = "";
 
-    this.updateDestinationsList(destinations);
+      this.updateDestinationsList(destinations);      
+    } else if(destinations.status == 2) {
+      this.destinationsScreen.style.display = "none";
+      this.statusText.style.display = "inline";
+      
+      this.statusText.text = "Error searching one or more addresses. Check them in app settings";      
+    } else if(destinations.status == 3) {
+      this.destinationsScreen.style.display = "none";
+      this.statusText.style.display = "inline";
+      
+      this.statusText.text = "Error acquiring your GPS position";
+    }
   } else {
     this.destinationsScreen.style.display = "none";
     this.statusText.style.display = "inline";

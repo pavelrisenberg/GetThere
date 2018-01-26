@@ -38,6 +38,6 @@
     <image x="0" y="0" width="348" height="50" href="gradient.png" />
     <!-- Header items -->
     <image x="9" y="13" width="30" height="24" href="car-icon.png" />
-    <text id="currentTimeText" x="300" y="39" width="48" height="24" />
+    <text id="currentTimeText" x="270" y="39" width="48" height="24" />
   </rect>
 </svg>
