@@ -14,7 +14,7 @@ This application is licensed under the [MIT License](./LICENSE).
 ## Feature asks
 
 * Add steps
-* Treat correctly errors with address identification
-* Geocoding feedback on Settings
+* Treat correctly errors with address identification (need to parse API erros more specifically)
 * Support for "mi"
 * Support for "am/pm" time format
+* Layout corrections
