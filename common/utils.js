@@ -19,7 +19,7 @@ export function getFormattedCurrentTime() {
 
 // Get time in HH:MM format 
 export function getFormattedTime(time) {
-  return ('0' + time.getHours()).slice(-2) + ":" + ('0' + time.getMinutes()).slice(-2);
+  return (('0' + time.getHours()).slice(-2)) + ":" + (('0' + time.getMinutes()).slice(-2));
 }
 
 // Add minutes to Date
@@ -36,10 +36,10 @@ export function getTimeAtDestination(minutes) {
 
 // Get X h Y min from minute
 export function getFormattedDuration(minutes) {
-  return 
-    (minutes >= 60)?
-      (minutes / 60).toFixed(0) + " h " + (minutes % 60).toFixed(0) + " min"
-    :
-      minutes.toFixed(0) + " min";
-    
+  if (minutes >= 60) {
+    return (minutes / 60).toFixed(0) + "h" + (minutes % 60).toFixed(0) + "m"
+  } else {
+    return minutes.toFixed(0) + "m";
+  }
+  
 }

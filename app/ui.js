@@ -7,6 +7,8 @@ export function GetThereUI() {
   this.destinationsScreen = document.getElementById("destinationsScreen");
   this.currentTimeText = document.getElementById("currentTimeText");
   this.statusText = document.getElementById("status");
+  this.statusHeader = this.statusText.getElementById("header");
+  this.statusCopy = this.statusText.getElementById("copy");
   
   this.tiles = [];
   for (var i = 0; i < DESTINATIONS_COUNT; i++) {
@@ -24,32 +26,38 @@ GetThereUI.prototype.updateUI = function(state, destinations) {
     if(destinations.status == 1) {
       this.destinationsScreen.style.display = "inline";
       this.statusText.style.display = "none";
-      this.statusText.text = "";
+      this.statusHeader.text = "";
+      this.statusCopy.text = "";
 
       this.updateDestinationsList(destinations);      
     } else if(destinations.status == 2) {
       this.destinationsScreen.style.display = "none";
       this.statusText.style.display = "inline";
       
-      this.statusText.text = "Error searching one or more addresses. Check them in app settings";      
+      this.statusHeader.text = "Houston ...";      
+      this.statusCopy.text = "Can't route to the addresses. Check them in the app settings.";      
     } else if(destinations.status == 3) {
       this.destinationsScreen.style.display = "none";
       this.statusText.style.display = "inline";
       
-      this.statusText.text = "Error acquiring your GPS position";
+      this.statusHeader.text = "Houston ...";      
+      this.statusCopy.text = "Error acquiring location. You can run, but you can't hide!";
     }
   } else {
     this.destinationsScreen.style.display = "none";
     this.statusText.style.display = "inline";
 
     if (state === "loading") {
-      this.statusText.text = "Loading times to destinations ...";
+      this.statusHeader.text = "";      
+      this.statusCopy.text = "Computing routes to destinations ...";
     }
     else if (state === "disconnected") {
-      this.statusText.text = "Please check connection to phone and Fitbit App";
+      this.statusHeader.text = "Houston ...";      
+      this.statusCopy.text = "Please shake connection to the phone / Fitbit App.";
     }
     else if (state === "error") {
-      this.statusText.text = "Connection error";
+      this.statusHeader.text = "Houston ...";      
+      this.statusCopy.text = "Please shake connection to the phone / Fitbit App.";
     }
   }
 }

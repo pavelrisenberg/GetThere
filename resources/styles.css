@@ -29,22 +29,22 @@ textarea {
 
 #currentTimeText {
   font-size: 30;
-  text-length: 10;
+  text-length: 12;
 }
 
 .destination-name {
   font-size: 30;
-  text-length: 15;  
+  text-length: 16;  
 }
 
 .duration {
   font-size: 60;
-  text-length: 10;  
+  text-length: 12;  
 }
 
 .distance {
   font-size: 30;
-  text-length: 10;  
+  text-length: 12;  
 }
 
 .arrival {

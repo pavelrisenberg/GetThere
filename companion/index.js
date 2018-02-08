@@ -113,7 +113,7 @@ function positionSuccess(position) {
         }
       }, function(destinationData) {
         if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-          console.log("Sending data to clock: " + JSON.stringify(destinationData));
+          //console.log("Sending data to clock: " + JSON.stringify(destinationData));
           messaging.peerSocket.send({
             "destinationData": destinationData, 
             "status": 2
