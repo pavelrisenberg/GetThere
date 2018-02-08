@@ -1,16 +1,24 @@
 <svg>
   <!-- Reusable destination tile flash cards -->
   <symbol id="tile-destination" focusable="false" pointer-events="visible" system-events="all">
-    <text id="destination-name" x="19" y="50" text-overflow="ellipsis" class="destination-name"></text>
-    <text id="duration" x="20" y="126" class="duration"></text>
-    <text id="distance" x="267" y="87" class="distance"></text>
-    <text id="distanceLabel" x="267" y="117" class="distance"></text>
-    <text id="arrival" x="19" y="165" class="arrival" opacity="70"></text>
+    <text id="destination-name" x="19" y="40" text-overflow="ellipsis" class="destination-name"></text>
+    <text id="duration" x="20" y="107" class="duration"></text>
+    <text id="distance" x="310" y="77" text-anchor="end" class="distance"></text>
+    <text id="distanceLabel" x="310" y="107" text-anchor="end" class="distance"></text>
+    <text id="arrival" x="19" y="155" class="arrival" opacity="70"></text>
     <rect x="0" y="170" width="100%" height="9" fill="black" />
   </symbol>
 
   <!-- Status screen, when anything rogue -->
-  <textarea id="status"></textarea>
+  <!--<textarea id="status"></textarea>-->
+  <use id="status" href="#mixed-text-center-mid" height="100%" fill="fb-green">
+    <set href="#header/text" attributeName="text-buffer" to=""/>
+    <set href="#copy/text" attributeName="text-buffer" to=""/>
+    
+    <!-- Additional properties -->
+    <set href="#header/text" attributeName="fill" to="fb-green" />    
+    <set href="#copy/text" attributeName="text-length" to="128" />
+  </use>
 
   <!-- Main screen -->
   <rect id="destinationsScreen" x="0" y="0" width="100%" height="100%"> 
@@ -38,6 +46,6 @@
     <image x="0" y="0" width="348" height="50" href="gradient.png" />
     <!-- Header items -->
     <image x="9" y="13" width="30" height="24" href="car-icon.png" />
-    <text id="currentTimeText" x="270" y="39" width="48" height="24" />
+    <text id="currentTimeText" x="335" y="39" text-anchor="end" width="100" height="24" />
   </rect>
 </svg>
