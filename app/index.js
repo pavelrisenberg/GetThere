@@ -7,19 +7,19 @@ console.log("Get There starting!");
 
 var ui = new GetThereUI();
 
-setInterval(function() {
+setTimeout(function() {
   if(!(messaging.peerSocket.readyState === messaging.peerSocket.OPEN)) {
     ui.updateUI("disconnected");
   }
 }, 3000);
 
 // Connected?
-setInterval(function() {
-  if (messaging.peerSocket.readyState != messaging.peerSocket.OPEN) {
-    console.log("Get There App (" + me.buildId + "): app connection=" + messaging.peerSocket.readyState + 
-                " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
-  }
-}, 3000);
+//setInterval(function() {
+//  if (messaging.peerSocket.readyState != messaging.peerSocket.OPEN) {
+//    console.log("Get There App (" + me.buildId + "): app connection=" + messaging.peerSocket.readyState + 
+//                " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
+//  }
+//}, 3000);
 
 // Listen for the onopen event
 messaging.peerSocket.onopen = function() {
