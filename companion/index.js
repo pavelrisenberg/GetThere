@@ -5,27 +5,39 @@ import { me } from "companion";
 
 import { GoogleMapsAPI } from "./gmaps.js";
 import { DESTINATIONS_COUNT, 
-        MOSCOW_NAME, MOSCOW_LATITUDE, MOSCOW_LONGITUDE } from "../common/globals.js";
+        DEFAULT_NAME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from "../common/globals.js";
 
 console.log("Get There companion started");
 
+var appSettings = {
+  unitSystem: false,
+  timeSystem: false
+};
+
 settingsStorage.onchange = function(evt) {
-  console.log("Settings have changed! " + JSON.stringify(evt));
+  console.log("Settings have changed!");
+  readSettings();
   sendSchedule();
 }
 
+function readSettings() {
+  appSettings.unitSystem = settingsStorage.getItem("unit_system") == "true";
+  appSettings.timeSystem = settingsStorage.getItem("time_system") == "true";
+}
+
 // Connected?
-setInterval(function() {
-  if (messaging.peerSocket.readyState != messaging.peerSocket.OPEN) {
-    console.log("Get There App (" + me.buildId + "): companion connection=" + messaging.peerSocket.readyState + 
-                " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
-  }
-}, 3000);
+//setInterval(function() {
+//  if (messaging.peerSocket.readyState != messaging.peerSocket.OPEN) {
+//    console.log("Get There App (" + me.buildId + "): companion connection=" + messaging.peerSocket.readyState + 
+//                " Connected? " + (messaging.peerSocket.readyState == messaging.peerSocket.OPEN ? "YES" : "no"));
+//  }
+//}, 3000);
 
 // Listen for the onopen event
 messaging.peerSocket.onopen = function() {
   // Ready to send or receive messages
   console.log("Socket opened (companion)");
+  readSettings();
   sendSchedule();
 }
 
@@ -48,11 +60,11 @@ function sendSchedule() {
 
 function positionSuccess(position) {
 
-  let destinationsSettings = [];
+  var destinationsSettings = [];
   
-  for (let i = 1; i <= DESTINATIONS_COUNT; i++){
-    let destination_name = settingsStorage.getItem("destination_name" + i);
-    let address = settingsStorage.getItem("address" + i);
+  for (var i = 1; i <= DESTINATIONS_COUNT; i++){
+    var destination_name = settingsStorage.getItem("destination_name" + i);
+    var address = settingsStorage.getItem("address" + i);
                                        
     if (destination_name && address) {
       try {
@@ -83,12 +95,12 @@ function positionSuccess(position) {
   if(!destinationsSettings.length) {
     console.log("No settings found overall - passing default settings");
     destinationsSettings.push({
-      "destination_name": MOSCOW_NAME,
-      "address": MOSCOW_LATITUDE + "," + MOSCOW_LONGITUDE
+      "destination_name": DEFAULT_NAME,
+      "address": DEFAULT_LATITUDE + "," + DEFAULT_LONGITUDE
      });
   }
 
-  let destinations = "";
+  var destinations = "";
   for (let i = 0; i < destinationsSettings.length; i++) {
     if(i) {
       destinations += "|";
@@ -106,34 +118,37 @@ function positionSuccess(position) {
         if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
           console.log("Sending data to clock: " + JSON.stringify(destinationData));
           messaging.peerSocket.send({
-            "destinationData": destinationData, 
+            "destinationData": destinationData,
+            "appSettings": appSettings,
             "status": 1
           });
     
         }
       }, function(destinationData) {
         if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-          //console.log("Sending data to clock: " + JSON.stringify(destinationData));
+          console.log("Sending data to clock: " + JSON.stringify(destinationData));
           messaging.peerSocket.send({
             "destinationData": destinationData, 
+            "appSettings": appSettings,
             "status": 2
           });
         }
   }).catch(function (e) {
-    console.log("error"); console.log(e);
+    console.log("Error: " + JSON.stringify(e));
     messaging.peerSocket.send({
       "destinationData": destinationData, 
+      "appSettings": appSettings,
       "status": 2
     });
   });
 
 }
 
-
-function positionError(position) {
-  console.log("Position error"); 
+function positionError(e) {
+  console.log("Position error: " + JSON.stringify(e)); 
     messaging.peerSocket.send({
-      "destinationData": destinationData, 
+      "destinationData": null, 
+      "appSettings": appSettings,
       "status": 3
     });
 }

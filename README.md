@@ -5,16 +5,9 @@ Fitbit SDK application that shows an arrival time for your ride to top  3 favori
 Team:
 Maksim Asichka
 Pavel Risenberg
-Kiryl Verkhovin
 
 ## License
 
 This application is licensed under the [MIT License](./LICENSE).
 
 ## Feature asks
-
-* Add steps
-* Treat correctly errors with address identification (need to parse API erros more specifically)
-* Support for "mi"
-* Support for "am/pm" time format
-* Layout corrections

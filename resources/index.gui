@@ -1,6 +1,7 @@
 <svg>
   <!-- Reusable destination tile flash cards -->
   <symbol id="tile-destination" focusable="false" pointer-events="visible" system-events="all">
+    <image id="error-image" x="139" y="55" width="50" height="50" href="error.png" class="error-image" />
     <text id="destination-name" x="19" y="40" text-overflow="ellipsis" class="destination-name"></text>
     <text id="duration" x="20" y="107" class="duration"></text>
     <text id="distance" x="310" y="77" text-anchor="end" class="distance"></text>
@@ -10,7 +11,6 @@
   </symbol>
 
   <!-- Status screen, when anything rogue -->
-  <!--<textarea id="status"></textarea>-->
   <use id="status" href="#mixed-text-center-mid" height="100%" fill="fb-green">
     <set href="#header/text" attributeName="text-buffer" to=""/>
     <set href="#copy/text" attributeName="text-buffer" to=""/>
@@ -27,15 +27,15 @@
       <var id="reorder-enabled" value="0"/>
       <var id="separator-height-bottom" value="2"/>
 
-      <use id="destination-0" href="#tile-list-item" class="item">
+      <use id="destination-0" href="#tile-list-item" class="tile-item">
         <image x="0" y="0" width="328" height="170" href="bg_green.png" />
         <use href="#tile-destination" />
       </use>
-      <use id="destination-1" href="#tile-list-item" class="item">
+      <use id="destination-1" href="#tile-list-item" class="tile-item">
         <image x="0" y="0" width="328" height="170" href="bg_blue.png" />
         <use href="#tile-destination" />
       </use>
-      <use id="destination-2" href="#tile-list-item" class="item">
+      <use id="destination-2" href="#tile-list-item" class="tile-item">
         <image x="0" y="0" width="328" height="170" href="bg_purple.png" />
         <use href="#tile-destination" />
       </use>
