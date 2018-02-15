@@ -10,6 +10,8 @@ export function GetThereUI() {
   this.statusHeader = this.statusText.getElementById("header");
   this.statusCopy = this.statusText.getElementById("copy");
   
+  this.timeSystem = false;
+  
   this.tiles = [];
   for (var i = 0; i < DESTINATIONS_COUNT; i++) {
     var tile = document.getElementById(`destination-${i}`);
@@ -59,17 +61,22 @@ GetThereUI.prototype.updateUI = function(state, destinations) {
   }
 }
 
+GetThereUI.prototype.updateClock = function(destinations) {
+  this.currentTimeText.text = getFormattedCurrentTime(this.timeSystem);
+}
+
 GetThereUI.prototype.updateDestinationsList = function(destinations) {
   
-  this.currentTimeText.text = getFormattedCurrentTime(destinations.appSettings.timeSystem);
-  
-  for (let i = 0; i < destinations.destinationData.length; i++) {    
+  this.timeSystem = destinations.appSettings.timeSystem;
+  this.updateClock();
+
+  for (var i = 0; i < DESTINATIONS_COUNT; i++) {    
     var tile = this.tiles[i];
     if (!tile) {
       console.log("no tile for index " + i);
       continue;
     }
-
+    
     if (i >= destinations.destinationData.length) {
       tile.style.display = "none";
       continue;
@@ -113,7 +120,7 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
       // * ZERO_RESULTS 
       // * MAX_ROUTE_LENGTH_EXCEEDED
       // * UNKNOWN
-      tile.getElementById("duration").text = "--";
+      tile.getElementById("duration").text = "";
       tile.getElementById("distance").text = "";
       tile.getElementById("distanceLabel").text = "";
       tile.getElementById("error-image").style.display = "inline";
