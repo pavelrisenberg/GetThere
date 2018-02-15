@@ -4,8 +4,7 @@ import { geolocation } from "geolocation";
 import { me } from "companion";
 
 import { GoogleMapsAPI } from "./gmaps.js";
-import { DESTINATIONS_COUNT, 
-        DEFAULT_NAME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from "../common/globals.js";
+import { DESTINATIONS_COUNT, DEFAULT_NAME, DEFAULT_ADDRESS } from "../common/globals.js";
 
 console.log("Get There companion started");
 
@@ -46,6 +45,10 @@ messaging.peerSocket.onmessage = function(evt) {
   // Output the message to the console
   console.log("Received message (companion)!");
   console.log(JSON.stringify(evt.data));
+  if(evt.data.message == "update") {
+    readSettings();
+    sendSchedule();
+  }
 }
 
 // Listen for the onerror event
@@ -65,16 +68,18 @@ function positionSuccess(position) {
   for (var i = 1; i <= DESTINATIONS_COUNT; i++){
     var destination_name = settingsStorage.getItem("destination_name" + i);
     var address = settingsStorage.getItem("address" + i);
-                                       
+
     if (destination_name && address) {
       try {
         destination_name = JSON.parse(destination_name);
         address = JSON.parse(address);
       
         if (!address ||
-            typeof(address) !== "object" ||
+            typeof(address) !== "object" || 
+            !address.name ||
             !destination_name ||
-            typeof(destination_name) !== "object"
+            typeof(destination_name) !== "object" ||
+            !destination_name.name
            ) {
           console.log("No settings found");
         } else {
@@ -96,7 +101,7 @@ function positionSuccess(position) {
     console.log("No settings found overall - passing default settings");
     destinationsSettings.push({
       "destination_name": DEFAULT_NAME,
-      "address": DEFAULT_LATITUDE + "," + DEFAULT_LONGITUDE
+      "address": DEFAULT_ADDRESS
      });
   }
 
