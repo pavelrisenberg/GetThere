@@ -83,8 +83,8 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
     }
     
     tile.getElementById("error-image").style.display = "none";
-    tile.style.display = "inline";    
     tile.getElementById("destination-name").text = destinations.destinationData[i].destination_name;
+    tile.style.display = "inline";
 
     if(destinations.status && destinations.destinationData[i].success) {
       // Rendering happy scenario

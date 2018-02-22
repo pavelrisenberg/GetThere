@@ -6,8 +6,8 @@ import { GetThereUI } from "./ui.js";
 console.log("Get There starting!");
 
 var ui = new GetThereUI();
+var lastUpdateTime = new Date();
 var clockTick;
-var lastUpdateTime;
 
 setTimeout(function() {
   if(!(messaging.peerSocket.readyState === messaging.peerSocket.OPEN)) {
@@ -30,11 +30,12 @@ function clockTickReset() {
     clockTick = setInterval(function() {
       ui.updateClock();
       var currentTime = new Date();
-      if(currentTime.getTime() - lastUpdateTime.getTime() > 60000){
+      if(currentTime.getTime() - lastUpdateTime.getTime() > 60 * 1000){
         // Information update once a minute if display is on
         messaging.peerSocket.send({
          "message": "update"
-        });      
+        });
+        lastUpdateTime = currentTime;
       }
     }, 1000);
   } else {
