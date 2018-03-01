@@ -69,11 +69,11 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
   
   this.timeSystem = destinations.appSettings.timeSystem;
   this.updateClock();
-
-  for (var i = 0; i < DESTINATIONS_COUNT; i++) {    
-    var tile = this.tiles[i];
+  
+  for (var i = 0, j = 0; i < DESTINATIONS_COUNT || j < DESTINATIONS_COUNT; i++, j++) {    
+    var tile = this.tiles[j];
     if (!tile) {
-      console.log("no tile for index " + i);
+      console.log("No tile for index: " + i);
       continue;
     }
     
@@ -84,7 +84,6 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
     
     tile.getElementById("error-image").style.display = "none";
     tile.getElementById("destination-name").text = destinations.destinationData[i].destination_name;
-    tile.style.display = "inline";
 
     if(destinations.status && destinations.destinationData[i].success) {
       // Rendering happy scenario
@@ -92,6 +91,7 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
       var distance = destinations.destinationData[i].distance / 1000;
       // Detecting if I'm around location in question with <=1km duration
       if (distance > 1) {
+        tile.style.display = "inline";
         tile.getElementById("duration").text = getFormattedDuration(duration, destinations.appSettings.timeSystem);
         if(!destinations.destinationData[i].trafficInfo) {
           tile.getElementById("duration").text += " *";          
@@ -113,6 +113,7 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
         
       } else {
         tile.style.display = "none";
+        j--;
       }
     } else {
       // errorCode possible values: 
@@ -143,5 +144,6 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
       }
     } 
   }
+  
 }
 

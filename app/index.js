@@ -1,13 +1,13 @@
 import * as messaging from "messaging";
+import clock  from "clock";
 import { me } from "appbit";
 import { display } from "display";
 import { GetThereUI } from "./ui.js";
 
-console.log("Get There starting!");
+console.log("Get There starting...");
 
 var ui = new GetThereUI();
 var lastUpdateTime = new Date();
-var clockTick;
 
 setTimeout(function() {
   if(!(messaging.peerSocket.readyState === messaging.peerSocket.OPEN)) {
@@ -25,27 +25,21 @@ setTimeout(function() {
 //}, 3000);
 
 // Clock updates when display is on
-function clockTickReset() {
-  if(display.on) {
-    clockTick = setInterval(function() {
-      ui.updateClock();
-      var currentTime = new Date();
-      if(currentTime.getTime() - lastUpdateTime.getTime() > 60 * 1000){
-        // Information update once a minute if display is on
-        messaging.peerSocket.send({
-         "message": "update"
-        });
-        lastUpdateTime = currentTime;
-      }
-    }, 1000);
-  } else {
-    clearInterval(clockTick);
-  }  
-}
-display.addEventListener("change", function(display, evt) {
-  clockTickReset();
+clock.granularity = "seconds";
+clock.addEventListener("tick", function(clock, evt) {
+  ui.updateClock();
+  var currentTime = new Date();
+  if(currentTime.getTime() - lastUpdateTime.getTime() > 60 * 1000){
+  // Information update once a minute if display is on  
+    if(messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+      messaging.peerSocket.send({
+        "message": "update"
+      });
+      lastUpdateTime = currentTime;
+    }
+  }
 });
-clockTickReset();
+
 
 
 // Listen for the onopen event
@@ -58,7 +52,7 @@ messaging.peerSocket.onopen = function() {
 messaging.peerSocket.onmessage = function(evt) {
   console.log("Received message (app)!");
   ui.updateUI("loaded", evt.data);
-  lastUpdateTime = new Date();
+  lastUpdateTime = new Date();  
 }
 
 // Listen for the onerror event

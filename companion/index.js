@@ -6,7 +6,7 @@ import { me } from "companion";
 import { GoogleMapsAPI } from "./gmaps.js";
 import { DESTINATIONS_COUNT, DEFAULT_NAME, DEFAULT_ADDRESS } from "../common/globals.js";
 
-console.log("Get There companion started");
+console.log("Get There companion starting...");
 
 var appSettings = {
   unitSystem: false,
@@ -14,7 +14,7 @@ var appSettings = {
 };
 
 settingsStorage.onchange = function(evt) {
-  console.log("Settings have changed!");
+  console.log("Settings have changed...");
   readSettings();
   sendSchedule();
 }
