@@ -7,15 +7,15 @@ function mySettings(props) {
       </Section>
       <Section title={<Text bold align="left">Destination #1</Text>}>
         <TextInput label="Name" placeholder="Home" settingsKey="destination_name1"/>
-        <TextInput label="Address" placeholder="199 Fremont, San Francisco" settingsKey="address1"/>
+        <TextInput label="Address (Coordinates)" placeholder="199 Fremont, San Francisco" settingsKey="address1"/>
       </Section>
       <Section title={<Text bold align="left">Destination #2</Text>}>
         <TextInput label="Name" placeholder="Work" settingsKey="destination_name2"/>
-        <TextInput label="Address" placeholder="199 Fremont, San Francisco" settingsKey="address2"/>
+        <TextInput label="Address (Coordinates)" placeholder="199 Fremont, San Francisco" settingsKey="address2"/>
       </Section>
       <Section title={<Text bold align="left">Destination #3</Text>}>
         <TextInput label="Name" placeholder="Secret Place" settingsKey="destination_name3"/>
-        <TextInput label="Address" placeholder="199 Fremont, San Francisco" settingsKey="address3"/>
+        <TextInput label="Address (Coordinates)" placeholder="199 Fremont, San Francisco" settingsKey="address3"/>
       </Section>
       <Section title={<Text bold align="left">Rules of the road</Text>}>
         <Text>1. Whenever traffic information will be unavailable to the destination, the duration will have "*" sign in the app.</Text>

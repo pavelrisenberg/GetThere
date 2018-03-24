@@ -20,9 +20,9 @@ textarea {
   font-size: 30;
   text-length: 12;
   width: 100;
-  height: 24;
-  x: 335;
-  y: 39;
+  height: 24;  
+  x: 287;
+  y: 39;  
 }
 
 
@@ -56,47 +56,49 @@ textarea {
 }
 
 .tile-item-image {
-  width: 328;
+  width: 280;
   height: 179;
 }
+
 
 .destination-name {
   font-size: 30;
   text-length: 16;
   x: 19;
-  y: 40;
+  y: 40;  
 }
 
 .duration {
   font-size: 60;
   text-length: 12;
   x: 20;
-  y: 107;
+  y: 107;  
 }
 
 .distance {
   font-size: 30;
   text-length: 12;
-  x: 310;
+  x: 262;
   y: 77;  
 }
 
 .distanceLabel {
   font-size: 30;
   text-length: 12;
-  x: 310;
-  y: 107;  
+  x: 262;
+  y: 107;
 }
 
 .arrival {
   font-size: 30;
   text-length: 20;
   x: 19;
-  y: 155;    
+  y: 155;   
 }
 
 .error-image {
   display: none;
-  x: 139; 
+  x: 115; 
   y: 55;
+  
 }

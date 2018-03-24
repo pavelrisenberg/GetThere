@@ -1,12 +1,12 @@
 <svg>
   <!-- Reusable destination tile flash cards -->
   <symbol id="tile-destination" focusable="false" pointer-events="visible" system-events="all">
-    <image id="error-image" x="139" y="55" width="50" height="50" href="error.png" class="error-image" />
-    <text id="destination-name" x="19" y="40" text-overflow="ellipsis" class="destination-name"></text>
-    <text id="duration" x="20" y="107" class="duration"></text>
-    <text id="distance" x="310" y="77" text-anchor="end" class="distance"></text>
-    <text id="distanceLabel" x="310" y="107" text-anchor="end" class="distance"></text>
-    <text id="arrival" x="19" y="155" class="arrival" opacity="70"></text>
+    <image id="error-image" width="50" height="50" href="error.png" class="error-image" />
+    <text id="destination-name" text-overflow="ellipsis" class="destination-name"></text>
+    <text id="duration" class="duration"></text>
+    <text id="distance" text-anchor="end" class="distance"></text>
+    <text id="distanceLabel" text-anchor="end" class="distanceLabel"></text>
+    <text id="arrival" class="arrival" opacity="70"></text>
     <rect x="0" y="170" width="100%" height="9" fill="black" />
   </symbol>
 
@@ -23,29 +23,29 @@
   <!-- Main screen -->
   <rect id="destinationsScreen" x="0" y="0" width="100%" height="100%"> 
     <!-- List items of main view -->
-    <use id="destinationsList" href="#tile-list" x="10" y="50" width="311" height="200" >
+    <use id="destinationsList" href="#tile-list" x="10" y="50">
       <var id="reorder-enabled" value="0"/>
       <var id="separator-height-bottom" value="2"/>
 
       <use id="destination-0" href="#tile-list-item" class="tile-item">
-        <image x="0" y="0" width="328" height="170" href="bg_green.png" />
+        <image x="0" y="0" href="bg_green.png" class="tile-item-image" />
         <use href="#tile-destination" />
       </use>
       <use id="destination-1" href="#tile-list-item" class="tile-item">
-        <image x="0" y="0" width="328" height="170" href="bg_blue.png" />
+        <image x="0" y="0" href="bg_blue.png" class="tile-item-image" />
         <use href="#tile-destination" />
       </use>
       <use id="destination-2" href="#tile-list-item" class="tile-item">
-        <image x="0" y="0" width="328" height="170" href="bg_purple.png" />
+        <image x="0" y="0" href="bg_purple.png" class="tile-item-image" />
         <use href="#tile-destination" />
       </use>
     </use>
     
     
     <!-- Gradient -->
-    <image x="0" y="0" width="348" height="50" href="gradient.png" />
+    <image x="0" y="0" height="50" href="gradient.png" />
     <!-- Header items -->
     <image x="9" y="13" width="30" height="24" href="car-icon.png" />
-    <text id="currentTimeText" x="335" y="39" text-anchor="end" width="100" height="24" />
+    <text id="currentTimeText" text-anchor="end" />
   </rect>
 </svg>
