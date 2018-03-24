@@ -7,14 +7,22 @@ export function GoogleMapsAPI(apiKey) {
   }
 };
 
-GoogleMapsAPI.prototype.getRouteTiming = function(origin, destination, resultArray) {
+GoogleMapsAPI.prototype.getRouteTiming = function(origin, resultArray) {
   var self = this;
+  
+  var destinations = "";
+  for (let i = 0; i < resultArray.length; i++) {
+    if(i) {
+      destinations += "|";
+    }
+    destinations += resultArray[i].address;
+  }  
   return new Promise(function(resolve, reject) {
     var url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     url += "&key=" + self.apiKey;
     url += "&mode=driving&units=metric&departure_time=now&traffic_model=pessimistic";
     url += "&origins=" + origin;
-    url += "&destinations=" + destination;
+    url += "&destinations=" + destinations;
     console.log("Fetching URL: " + url);
     fetch(url).then(function(response) {
       return response.json();

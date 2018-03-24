@@ -4,6 +4,7 @@ import { geolocation } from "geolocation";
 import { me } from "companion";
 
 import { GoogleMapsAPI } from "./gmaps.js";
+import { BingMapsAPI } from "./bingmaps.js";
 import { DESTINATIONS_COUNT, DEFAULT_NAME, DEFAULT_ADDRESS } from "../common/globals.js";
 
 console.log("Get There companion starting...");
@@ -104,19 +105,12 @@ function positionSuccess(position) {
       "address": DEFAULT_ADDRESS
      });
   }
-
-  var destinations = "";
-  for (let i = 0; i < destinationsSettings.length; i++) {
-    if(i) {
-      destinations += "|";
-    }
-    destinations += destinationsSettings[i].address;
-  }
   
-  var googleMapsApi = new GoogleMapsAPI();
-  googleMapsApi.getRouteTiming(
+//  var googleMapsApi = new GoogleMapsAPI();
+//  googleMapsApi.getRouteTiming(
+  var bingMapsApi = new BingMapsAPI();
+  bingMapsApi.getRouteTiming(
       position.coords.latitude + "," + position.coords.longitude, 
-      destinations, 
       destinationsSettings
       )
       .then(function(destinationData) {

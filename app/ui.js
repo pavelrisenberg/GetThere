@@ -1,5 +1,9 @@
 import { DESTINATIONS_COUNT } from "../common/globals.js";
 import { getFormattedCurrentTime, getFormattedDuration, getTimeAtDestination } from "../common/utils.js";
+import { me as device } from "device";
+
+// Detect default Ionic screen parameters for device not updated to Fitbit OS 2
+if (!device.screen) device.screen = { width: 348, height: 250 };
 
 let document = require("document");
 
@@ -105,7 +109,7 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
         }
      
         if(distance <= 2) {
-          tile.getElementById("arrival").text = "Better get some steps?";
+          tile.getElementById("arrival").text = "Get some steps?";
         } else {
           tile.getElementById("arrival").text =
             `Arriving at ${getTimeAtDestination(duration, destinations.appSettings.timeSystem)}`;
@@ -130,10 +134,10 @@ GetThereUI.prototype.updateDestinationsList = function(destinations) {
           tile.getElementById("arrival").text = "Address not found!";
           break;
         case "ZERO_RESULTS":
-          tile.getElementById("arrival").text = "No route found!";
+          tile.getElementById("arrival").text = "No route!";
           break;
         case "MAX_ROUTE_LENGTH_EXCEEDED":
-          tile.getElementById("arrival").text = "Route is too long!";
+          tile.getElementById("arrival").text = "Route too long!";
           break;
         case "UNKNOWN":
           tile.getElementById("arrival").text = "";
