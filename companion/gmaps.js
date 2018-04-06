@@ -3,7 +3,7 @@ export function GoogleMapsAPI(apiKey) {
     this.apiKey = apiKey;
   }
   else {
-    this.apiKey = "***REMOVED***";
+    this.apiKey = "<your key>";
   }
 };
 

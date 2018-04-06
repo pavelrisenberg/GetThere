@@ -3,11 +3,11 @@ export function BingMapsAPI(apiKey) {
     this.apiKey = apiKey;
   }
   else {
-    this.apiKey = "***REMOVED***";
+    this.apiKey = "<your key>";
   }
 };
 
-// Bing Maps API Geocoder: http://dev.virtualearth.net/REST/v1/Locations?query=&userLocation=&maxResults=1&key=***REMOVED***
+// Bing Maps API Geocoder: http://dev.virtualearth.net/REST/v1/Locations?query=&userLocation=&maxResults=1&key=AuqMWUD2CSN12TGQ3MzqzdeFeFm_lZh5vkLuxcFEdesUil8tWwPjjKmpPVdkxr28
 
 BingMapsAPI.prototype.getRouteTiming = function(origin, resultArray) {
   var self = this;
